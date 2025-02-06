@@ -36,7 +36,11 @@ func TestTiger(t *testing.T) {
 	cf := env.ClassFactory()
 	ex := extend.Define(art, cf)
 
-	ex.SharedPreference("altt", &tiger.SharedPreference{CookieID: base64.StdEncoding.EncodeToString(RandomBytes(64))})
+	altt := tiger.SharedPreference{
+		"TT_COOKIEID":     gava.FakeString(base64.StdEncoding.EncodeToString(RandomBytes(64))),
+		"TT_COOKIEID_NEW": gava.FakeString(base64.StdEncoding.EncodeToString(RandomBytes(64))),
+	}
+	ex.SharedPreference("altt", altt)
 
 	module, err := pkg.LoadModule(context.TODO(), art, "tiger_tally")
 	if err != nil {
@@ -49,7 +53,7 @@ func TestTiger(t *testing.T) {
 	cls := cf.GetClass("com.aliyun.TigerTally.t.B")
 
 	method := cls.GetMethod("genericNt1", "(Ljava/util/Map;)I")
-	r := method.CallPrimitive(nil, gava.MapOf(map[java.IObject]java.IObject{
+	r := method.CallPrimitive(nil, gava.MapOf(gava.Map{
 		gava.FakeString("AppKey"):      gava.FakeString("ypWt5wEEQwOEgLM4e12Gl26wHlW6Qj_XOG0-l7p3ju05wOt2jZ0tNkr5he6ei73A2AQQUH2QbJfvfJoKU_rKkdwvHEn75U6xYNgpgVYUVSjxZt1Ks5MdUQoZY_SK-ETAArxOUW1Mhf8uTnvvLUOB9tQMlSNcntBETjvhg8xB2CA="),
 		gava.FakeString("CollectType"): gava.FakeString("1"),
 	}))
@@ -82,7 +86,11 @@ func TestTiger2(t *testing.T) {
 	cf := env.ClassFactory()
 	ex := extend.Define(art, cf)
 
-	ex.SharedPreference("altt", &tiger.SharedPreference{CookieID: base64.StdEncoding.EncodeToString(RandomBytes(64))})
+	altt := tiger.SharedPreference{
+		"TT_COOKIEID":     gava.FakeString(base64.StdEncoding.EncodeToString(RandomBytes(64))),
+		"TT_COOKIEID_NEW": gava.FakeString(base64.StdEncoding.EncodeToString(RandomBytes(64))),
+	}
+	ex.SharedPreference("altt", altt)
 
 	module, err := pkg.LoadModule(context.TODO(), art, "tiger_tally")
 	if err != nil {

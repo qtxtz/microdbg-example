@@ -6,7 +6,6 @@ import (
 	"crypto/sha1"
 	"testing"
 	"time"
-	"unsafe"
 
 	android10 "github.com/wnxd/microdbg-android/10"
 	"github.com/wnxd/microdbg-android/extend"
@@ -42,8 +41,7 @@ func TestJMEncryptBox(t *testing.T) {
 
 	JMEncryptBox.DefineMethod("getFinger", "(Ljava/lang/String;[B)Ljava/lang/String;", gava.Modifier_PUBLIC|gava.Modifier_STATIC).BindCall(func(obj java.IObject, args ...any) any {
 		algorithm := args[0].(java.IString).String()
-		data := args[1].(java.IGenericArray[java.JByte]).Elements()
-		bytes := unsafe.Slice((*byte)(unsafe.Pointer(unsafe.SliceData(data))), len(data))
+		bytes := gava.GetBytes(args[1].(java.IByteArray))
 		switch algorithm {
 		case "MD5":
 			h := md5.Sum(bytes)

@@ -19,18 +19,6 @@ func (h Handler) DefineClass(ctx wrapper.FakeContext, name string) gava.FakeClas
 	// fmt.Println("DefineClass", name)
 	var cls gava.FakeClass
 	switch name {
-	case "android.content.Context":
-		cls = ctx.DefineClass(name)
-		cls.DefineMethod("checkCallingOrSelfPermission", "(Ljava/lang/String;)I", gava.Modifier_PUBLIC|gava.Modifier_ABSTRACT).BindCall(func(obj java.IObject, args ...any) any {
-			const (
-				PERMISSION_GRANTED = 0
-				PERMISSION_DENIED  = -1
-			)
-
-			permission := args[0].(java.IString).String()
-			_ = permission
-			return java.JInt(PERMISSION_DENIED)
-		})
 	case "com.aliyun.TigerTally.common.utils.SecurityUtil":
 		cls = ctx.DefineClass(name)
 		cls.DefineMethod("getCtx", "()Landroid/content/Context;", gava.Modifier_PUBLIC).BindCall(func(obj java.IObject, args ...any) any {
